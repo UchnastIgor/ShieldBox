@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     #local
     "user_app",
+    "sensors_data",
 ]
 
 SITE_ID = 1
