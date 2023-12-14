@@ -4,5 +4,6 @@ from django.db import models
 class SensorsData(models.Model):
     shieldbox_name = models.CharField(max_length=500)
     sensors_data = models.FloatField()
-    def __str__(self) -> float:
-        return self.sensors_data
+    # sensors_data = 20
+    # def __str__(self) -> float:
+    #     return self.sensors_data
