@@ -6,7 +6,18 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, viewsets, generics
 
+
 # Create your views here.
+# @api_view(['GET', 'POST'])
+def currentview(request):
+    sensordata = TemperatureSensor.objects.all()
+    context = {
+        "name": sensordata.name,
+        'value': sensordata.value,
+    }
+    
+    return JsonResponse({"name": sensordata.name, 'value': sensordata.value})
+
 @api_view(['GET', 'POST'])
 def shieldbox_list(request, format = None):
     if request.method == 'GET':
