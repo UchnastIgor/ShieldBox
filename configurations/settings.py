@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     #local
     "user_app",
+    "shieldbox_app",
 ]
 
 SITE_ID = 1
