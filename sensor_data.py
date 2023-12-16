@@ -32,7 +32,7 @@ import json
 url1 = "http://127.0.0.1:8000/shieldbox/devices/1/sensors/Sensor1"
 url2 = "http://127.0.0.1:8000/shieldbox/devices/2/sensors/Sensor2"
 
-data_to_send = {"name": "ShieldBox1", "value": 26.7}
+data_to_send = {"name": "Sensor1", "value": 4.7}
 
 response = requests.put(url1, data=json.dumps(data_to_send), headers={'Content-Type': 'application/json'})
 
