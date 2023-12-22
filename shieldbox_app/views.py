@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets, generics
 
 from sim_module import initialize_module, sendSMS
-from config import Numbers, MAX_TEMPERATURE, PIN
+from config import Numbers, MAX_TEMPERATURE
 
 initialize_module()
 # Create your views here.
@@ -75,10 +75,6 @@ def shieldbox_sensor_detail(request, device_id, name, format=None):
                 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    if request.method == 'DELETE':
-        sensor.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
     
     if request.method == 'DELETE':
         serializer = TemperatureSensorSerializer(sensor)
