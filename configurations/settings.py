@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xwk(+$m(rn#5lapb-mo&*ce8xs*6_nn-o#u^utrs1fe(yg&jc!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = False
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     #local
     "user_app",
+    "shieldbox_app",
 ]
 
 SITE_ID = 1
