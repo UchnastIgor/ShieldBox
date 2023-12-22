@@ -1,5 +1,6 @@
 import serial
 from time import sleep
+from config import PIN
 
 agsm = serial.Serial("/dev/ttyS0", baudrate=19200, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=8, timeout=1)
 
