@@ -3,7 +3,8 @@ from shieldbox_app import views
 
 urlpatterns = [
     path('', views.shieldbox_list),
-    path('<int:device_id>/sensors/', views.shieldbox_sensors),
-    path('<int:device_id>/sensors/<str:name>', views.shieldbox_sensor_detail),
-    # path('devices/current', views.currentview),
+    path('shieldbox/<int:device_id>/', views.shieldbox_id),
+    path('shieldbox/<int:device_id>/temp/', views.shieldbox_temp_sensor),
+    path('shieldbox/<int:device_id>/smoke/', views.shieldbox_smoke_sensor),
+    # path('<int:device_id>/sensors/<str:name>', views.shieldbox_sensor_detail),
 ]

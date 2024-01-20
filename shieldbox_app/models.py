@@ -11,15 +11,23 @@ class ShieldBox(models.Model):
 
 class TemperatureSensor(models.Model):
     device = models.ForeignKey(ShieldBox, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length = 50)
-    value = models.FloatField(max_length = 50)
-    smoke_value = models.FloatField(max_length = 50)
+    name = "tempSensor"
+    temp_value = models.FloatField(max_length = 50)
 
-    class Meta:
-        unique_together = ('name', 'device', "smoke_value")
+    # class Meta:
+    #     unique_together = ('name', 'device')
 
     def __str__(self):
         return self.name + ' ' + self.device.name
     
+class SmokeSensor(models.Model):
+    device = models.ForeignKey(ShieldBox, null=True, on_delete=models.CASCADE)
+    name = "smokeSensor"
+    smoke_value = models.FloatField(max_length = 50)
 
+    # class Meta:
+    #     unique_together = ('name', 'device')
+
+    def __str__(self):
+        return self.name + ' ' + self.device.name
     
