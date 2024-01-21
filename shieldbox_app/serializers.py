@@ -4,7 +4,7 @@ from rest_framework import serializers
 class TemperatureSensorSerializer(serializers.ModelSerializer):
     class Meta:
         model = TemperatureSensor
-        fields = ['temp_value']
+        fields = ['temp_value', 'time']
         
 class SmokeSensorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,7 +14,8 @@ class SmokeSensorSerializer(serializers.ModelSerializer):
 class ShieldBoxSerializer(serializers.ModelSerializer):
     temp_sensor = TemperatureSensorSerializer(many=True, read_only=True, source='temperaturesensor_set')
     smoke_sensor = SmokeSensorSerializer(many=True, read_only=True, source='smokesensor_set')
+    time = TemperatureSensorSerializer(many=True, read_only=True, source='temperaturesensor_set')
 
     class Meta:
         model = ShieldBox
-        fields = ['name','smoke_sensor', 'temp_sensor']
+        fields = ['name','smoke_sensor', 'temp_sensor', 'time']
