@@ -25,11 +25,15 @@ class TemperatureSensor(models.Model):
 class SmokeSensor(models.Model):
     device = models.ForeignKey(ShieldBox, null=True, on_delete=models.CASCADE)
     name = "smokeSensor"
-    smoke_value = models.FloatField(max_length = 50)
+    smoke_value = models.FloatField()
 
-    # class Meta:
-    #     unique_together = ('name', 'device')
+    def save(self, *args, **kwargs):
+        data = kwargs.pop('data', None)
+        if data:
+            self.smoke_value = data.get('smoke_value', 0.0)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name + ' ' + self.device.name
+
     

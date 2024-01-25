@@ -99,10 +99,14 @@ def shieldbox_smoke_sensor(request, device_id, format = None):
         return Response(serializer.data, status = status.HTTP_200_OK)
     
     if request.method == 'POST':
-        serializer = SmokeSensor(data = request.data)
-        if serializer.is_valid():
-            serializer.save(device = device)
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        try:
+            serializer = SmokeSensorSerializer(data=request.data)
+            if serializer.is_valid():
+                smoke_sensor_instance = SmokeSensor(device_id=device_id, smoke_value=serializer.validated_data['smoke_value'])
+                smoke_sensor_instance.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     
