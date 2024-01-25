@@ -85,24 +85,56 @@ def shieldbox_temp_sensor(request, device_id):
             serializer.save(device=device)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 @api_view(['GET', 'POST'])
-def shieldbox_smoke_sensor(request, device_id, format = None):
+def shieldbox_smoke_sensor(request, device_id):
     try:
         device = ShieldBox.objects.get(id=device_id)
     except ShieldBox.DoesNotExist:
         return Response({'error': 'Device not found'}, status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        sensors = SmokeSensor.objects.filter(device = device)
-        serializer = SmokeSensorSerializer(sensors, many=True)
-        return Response(serializer.data, status = status.HTTP_200_OK)
     
-    if request.method == 'POST':
-        serializer = SmokeSensor(data = request.data)
+    if request.method == 'GET':
+        count = request.query_params.get('count', None)
+        
+        try:
+            count = int(count)
+        except Exception:
+            count = None
+
+        sensors = SmokeSensor.objects.filter(device=device).order_by('-time')
+        serializer = SmokeSensorSerializer(sensors, many=True)
+        
+        if count is not None:
+             data = serializer.data[:count]
+        else:
+            data = serializer.data
+
+        return Response(data, status=status.HTTP_200_OK)
+    
+    elif request.method == 'POST':
+        serializer = SmokeSensorSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(device = device)
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+            serializer.save(device=device)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# @api_view(['GET', 'POST'])
+# def shieldbox_smoke_sensor(request, device_id, format = None):
+#     try:
+#         device = ShieldBox.objects.get(id=device_id)
+#     except ShieldBox.DoesNotExist:
+#         return Response({'error': 'Device not found'}, status=status.HTTP_404_NOT_FOUND)
+
+#     if request.method == 'GET':
+#         sensors = SmokeSensor.objects.filter(device = device)
+#         serializer = SmokeSensorSerializer(sensors, many=True)
+#         return Response(serializer.data, status = status.HTTP_200_OK)
+    
+#     if request.method == 'POST':
+#         serializer = SmokeSensor(data = request.data)
+#         if serializer.is_valid():
+#             serializer.save(device = device)
+#             return Response(serializer.data, status = status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
     
